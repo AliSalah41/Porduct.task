@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "bfec963b-bc96-4414-a39c-79c87cdc99b9",
+		"name": "product task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30355300"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|N1BNJmKWTVaFOtkKi718dp6X48qSexeDZRad6CSd39f313b7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}product-index?page=2",
+							"host": [
+								"{{local}}product-index"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "3|CnAfGCCGKe9iqRbCXX79jD0ll3gj47R4G693YoVt3eccc757",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Name\",\r\n    \"price\" : \"10\",\r\n    \"category_id\" : 1,\r\n    \"quantity\" : 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}product/store",
+							"host": [
+								"{{local}}product"
+							],
+							"path": [
+								"store"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"admin@gmail.com\",\r\n    \"password\" : 12345678\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}login",
+							"host": [
+								"{{local}}login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "local",
+			"value": "http://127.0.0.1:8000/api/",
+			"type": "string"
+		}
+	]
+}
