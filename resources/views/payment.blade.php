@@ -7,7 +7,7 @@
     </div>
 
     <div class="form-body">
-        <!-- Card Number (Stripe Element) -->
+        
         <div id="card-element">
             <!-- A Stripe Element will be inserted here. -->
         </div>
@@ -46,33 +46,28 @@
             </div>
         </div>
 
-        <!-- Hidden amount input -->
         <input type="hidden" id="amount" value="500.0" required>
 
         <!-- Buttons -->
         <button type="submit" class="proceed-btn">Proceed</button>
-        <button type="button" id="stripe-button" class="paypal-btn">Pay With Stripe</button>
+        {{-- <button type="button" id="stripe-button" class="paypal-btn">Pay With Stripe</button> --}}
     </div>
 </form>
 
 <script src="https://js.stripe.com/v3/"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    // Initialize Stripe.js and Elements
     const stripe = Stripe('pk_test_51QLYPS066VgTt731kZMY4MQfpbpilnzfgJLKPFIvhUVYHPgj69tGktS19c3obAXQR1hoDa2SvJz4Wf3qpePMX3Ws00YEoYy7M6'); // Replace with your public Stripe key
     const elements = stripe.elements();
 
-    // Create a Card Element and mount it in the form
     const card = elements.create('card');
     card.mount('#card-element');
 
     document.getElementById('payment-form').addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevent the form from refreshing the page
+        event.preventDefault();
 
-        // Get the amount value from the hidden field
-        const amount = parseFloat(document.getElementById('amount').value) * 100; // Convert to cents
+        const amount = parseFloat(document.getElementById('amount').value) * 100;
 
-        // Create payment method with the card details
         const { paymentMethod, error } = await stripe.createPaymentMethod({
             type: 'card',
             card: card,
@@ -83,11 +78,9 @@
             return;
         }
 
-        // Pass the paymentMethod.id and amount to handlePayment
         handlePayment(paymentMethod.id, amount);
     });
 
-    // Handle the payment submission
     const handlePayment = async (paymentMethodId, amountInCents) => {
         try {
             const { data } = await axios.post('/process-payment', {
@@ -96,7 +89,6 @@
             });
 
             if (data.requires_action) {
-                // Handle additional authentication (e.g., 3D Secure)
                 const { error: actionError } = await stripe.handleCardAction(data.payment_intent_id);
 
                 if (actionError) {
@@ -104,7 +96,6 @@
                     return;
                 }
 
-                // Confirm payment on the backend after successful authentication
                 const confirmResponse = await axios.post('/confirm-payment', {
                     payment_intent_id: data.payment_intent_id,
                 });

@@ -33,13 +33,13 @@ class ProductsController extends Controller
 
     public function store(ProductRequest $request)
     {
-        $userId = Auth::id();  // Ensure this retrieves the authenticated user's ID
+        $userId = Auth::id();
 
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'category_id' => $request->category_id,
-            'owner_id' => $userId ?? null,  // Assign the owner's ID here
+            'owner_id' => $userId ?? null,
             'quantity' => $request->quantity,
         ]);
 

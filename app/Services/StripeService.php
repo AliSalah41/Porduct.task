@@ -32,14 +32,13 @@ class StripeService
         try {
             return PaymentIntent::create([
                 'amount' => $amount,
-                'currency' => 'usd', // or another currency
+                'currency' => 'usd',
                 'payment_method' => $paymentMethodId,
                 'confirmation_method' => 'manual',
                 'confirm' => true,
                 'return_url' => route('payment.create')
             ]);
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            // Log the error message for debugging
             Log::error("Stripe API Error: " . $e->getMessage());
             throw new Exception("Stripe payment failed: " . $e->getMessage());
         }

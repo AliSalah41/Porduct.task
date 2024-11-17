@@ -38,17 +38,15 @@ class PaymentController extends Controller
     {
         $request->validate([
             'payment_method_id' => 'required|string',
-            'amount' => 'required|numeric|min:1', // Amount in cents
+            'amount' => 'required|numeric|min:1',
         ]);
 
         $paymentMethodId = $request->payment_method_id;
         $amount = $request->amount;
 
         try {
-            // Create and confirm the payment
             $paymentIntent = $this->stripeService->createCharge($paymentMethodId, $amount);
 
-            // Check the status of the PaymentIntent
             if ($paymentIntent->status === 'requires_action') {
                 return response()->json([
                     'success' => false,
@@ -57,9 +55,8 @@ class PaymentController extends Controller
                     'message' => 'Additional action is required to complete the payment.',
                 ], 200);
             } elseif ($paymentIntent->status === 'succeeded') {
-                // Save successful payment details in the database
                 $payment = new Payment();
-                $payment->user_id = auth()->id(); // Assuming authentication
+                $payment->user_id = auth()->id();
                 $payment->amount = $amount;
                 $payment->payment_method = 'stripe';
                 $payment->payment_status = 'succeeded';
@@ -73,7 +70,6 @@ class PaymentController extends Controller
                 ], 200);
             }
 
-            // Handle unexpected statuses
             return response()->json([
                 'success' => false,
                 'message' => 'Unexpected payment status: ' . $paymentIntent->status,
@@ -94,7 +90,6 @@ class PaymentController extends Controller
         ]);
 
         try {
-            // Retrieve and confirm the payment intent
             $paymentIntent = PaymentIntent::retrieve($request->payment_intent_id);
             $paymentIntent->confirm();
 

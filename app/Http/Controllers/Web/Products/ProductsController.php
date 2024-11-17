@@ -67,55 +67,6 @@ class ProductsController extends Controller
         }
     }
 
-    // public function store(ProductRequest $request)
-    // {
-    //     $userId = Auth::id();
-
-    //     $product = Product::create([
-    //         'name' => $request->name,
-    //         'price' => $request->price,
-    //         'category_id' => $request->category_id,
-    //         'owner_id' => $userId,
-    //         'quantity' => $request->quantity,
-    //     ]);
-
-    //     if ($product)
-    //     {
-    //         return "Successfully created";
-    //     }
-    //     else
-    //     {
-    //         return "Failed to create product";
-    //     }
-
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'description' => 'required|string',
-    //         // Add other fields and validation rules as needed
-    //     ]);
-
-    //     try {
-    //         $product = Product::create($validatedData);
-
-    //         return response()->json([
-    //             'success' => true,
-    //             'message' => 'Product created successfully.',
-    //             'data' => $product,
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'success' => false,
-    //             'message' => 'Failed to create product.',
-    //             'error' => $e->getMessage(),
-    //         ], 500);
-    //     }
-    // }
-
-
     public function getGraterPrice()
     {
         $product = Product::orderBy('price', 'desc')->first();

@@ -17,9 +17,6 @@
 
                         <label class="block font-medium text-sm text-gray-700" for="">Name</label>
                         <input class="form-control" id="name" name="name" required>
-                        {{-- @error('title')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror --}}
 
                         <label class="block font-medium text-sm text-gray-700" for="">quantity</label>
                         <input class="form-control" type="number" name="quantity" id="quantity">
@@ -35,16 +32,6 @@
                             @endforeach
                         </select>
 
-
-                        {{-- @error('description')
-                            <small class="form-text text-danger">{{ $message }}</small>
-                        @enderror --}}
-
-                        {{-- <br>
-                        <br>
-                        <br> --}}
-                      
-                       
                         <button class="form-control btn btn-primary" type="submit">Save</button>
                     </form>
                 </div>
